@@ -27,24 +27,28 @@ const menuLinks = document.querySelectorAll('.nav-links a');
 
 menuLinks.forEach(link => {
     link.addEventListener('click', event => {
-        event.preventDefault();
-        const targetId = link.getAttribute('href').substring(1);
-        const targetSection = document.getElementById(targetId);
+        const href = link.getAttribute('href');
 
-        if (targetSection) {
-            targetSection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-            });
-        }
+        if (href.startsWith('#')) {
+            event.preventDefault();
 
-        if (navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
+            const targetId = href.substring(1);
+            const targetSection = document.getElementById(targetId);
+
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                });
+            }
+
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
         }
     });
 });
 
-// Função para encolher a navbar ao rolar
 const navbar = document.querySelector('.navbar');
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
@@ -59,15 +63,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     links.forEach(link => {
         link.addEventListener("click", function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute("href").substring(1);
-            const targetElement = document.getElementById(targetId);
-            const navbarHeight = document.querySelector(".navbar").offsetHeight;
-            const targetPosition = targetElement.offsetTop - navbarHeight;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: "smooth"
-            });
+            const href = this.getAttribute("href");
+
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+                const navbarHeight = document.querySelector(".navbar").offsetHeight;
+                const targetPosition = targetElement.offsetTop - navbarHeight;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: "smooth"
+                });
+            }
         });
     });
 });
